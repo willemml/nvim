@@ -48,6 +48,7 @@ set visualbell
 set colorcolumn=100
 set updatetime=100
 set virtualedit=block
+set clipboard=unnamed
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -74,9 +75,7 @@ let g:terminal_color_13 = '#FF92D0'
 let g:terminal_color_14 = '#9AEDFE'
 
 
-" ===
-" === Basic Mappings
-" ===
+" Basic Mappings
 " Set <LEADER> as <SPACE>, ; as :
 let mapleader=" "
 noremap ; :
@@ -240,57 +239,26 @@ Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'theniceboy/eleline.vim'
 Plug 'ojroques/vim-scrollstatus'
 
-" General Highlighter
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-
 " File navigation
 Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'kevinhwang91/rnvimr'
-Plug 'pechorin/any-jump.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Git
-Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
-Plug 'fszymanski/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
-Plug 'airblade/vim-gitgutter'
-Plug 'cohama/agit.vim'
-Plug 'kdheepak/lazygit.nvim'
 
 " Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " Editor Enhancement
 Plug 'jiangmiao/auto-pairs'
-Plug 'easymotion/vim-easymotion'
-Plug 'theniceboy/argtextobj.vim'
-Plug 'rhysd/clever-f.vim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'theniceboy/pair-maker.vim'
-Plug 'theniceboy/vim-move'
-
-" Find & Replace
-Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
 
 " Other visual enhancement
-Plug 'luochen1990/rainbow'
-Plug 'mg979/vim-xtabline'
 Plug 'ryanoasis/vim-devicons'
 Plug 'wincent/terminus'
 
-" Other useful utilities
-Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
-
-" Dependencies
-" Plug 'MarcWeber/vim-addon-mw-utils'
-" Plug 'kana/vim-textobj-user'
-" Plug 'roxma/nvim-yarp'
-
-
 call plug#end()
-set re=0
+
+colorscheme material
 
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-toml', 'coc-rust-analyzer']
 
@@ -299,14 +267,6 @@ let g:rust_clip_command = 'pbcopy'
 let g:rustfmt_autosave = 1
 
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
-
-" Dress up my vim
-set termguicolors " enable true colors support
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-let g:material_theme_style = 'darker'
-
-colorscheme material
 
 " eleline.vim
 let g:airline_powerline_fonts = 0
@@ -338,6 +298,7 @@ nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
 nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
 nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
 nnoremap <c-c> :CocCommand<CR>
+
 " Text Objects
 xmap kf <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
@@ -347,16 +308,17 @@ xmap kc <Plug>(coc-classobj-i)
 omap kc <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
+
 " Useful commands
 nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gD :tab sp<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 nmap tt :CocCommand explorer<CR>
 nmap ts <Plug>(coc-translator-p)
+
 " Remap for do codeAction of selected region
 function! s:cocActionsOpenFromSelected(type) abort
   execute 'CocCommand actions.open ' . a:type
@@ -364,25 +326,16 @@ endfunction
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>aw  <Plug>(coc-codeaction-selected)w
 noremap <silent> <leader>ts :CocList tasks<CR>
-" coc-snippets
 
-" ===
-" === FZF
-" ===
-set rtp+=/usr/local/opt/fzf
-set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
-set rtp+=/home/david/.linuxbrew/opt/fzf
-nnoremap <c-p> :Leaderf file<CR>
-" noremap <silent> <C-p> :Files<CR>
+" FZF
 noremap <silent> <C-f> :Rg<CR>
 noremap <silent> <C-h> :History<CR>
-"noremap <C-t> :BTags<CR>
-" noremap <silent> <C-l> :Lines<CR>
 noremap <silent> <C-w> :Buffers<CR>
 noremap <leader>; :History:<CR>
 
 let g:fzf_preview_window = 'right:60%'
-let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_commits_log_options = '--graph --color=always 
+			\--format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 function! s:list_buffers()
   redir => list
@@ -405,73 +358,3 @@ noremap <c-d> :BD<CR>
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
-
-" Leaderf
-" let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_PreviewCode = 1
-let g:Lf_ShowHidden = 1
-let g:Lf_ShowDevIcons = 1
-let g:Lf_CommandMap = {
-\   '<C-k>': ['<C-u>'],
-\   '<C-j>': ['<C-e>'],
-\   '<C-]>': ['<C-v>'],
-\   '<C-p>': ['<C-n>'],
-\}
-let g:Lf_UseVersionControlTool = 0
-let g:Lf_IgnoreCurrentBufferName = 1
-let g:Lf_WildIgnore = {
-        \ 'dir': ['.git', 'vendor', 'node_modules'],
-        \ 'file': ['__vim_project_root', 'class']
-        \}
-let g:Lf_UseMemoryCache = 0
-let g:Lf_UseCache = 0
-
-
-" CTRLP (Dependency for omnisharp)
-let g:ctrlp_map = ''
-let g:ctrlp_cmd = 'CtrlP'
-
-" Far.vim
-noremap <LEADER>f :F  **/*<left><left><left><left><left>
-let g:far#mapping = {
-		\ "replace_undo" : ["l"],
-		\ }
-
-" fzf-gitignore
-noremap <LEADER>gi :FzfGitignore<CR>
-
-" vim-easymotion
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_do_shade = 0
-let g:EasyMotion_smartcase = 1
-
-" context.vim
-"let g:context_add_mappings = 0
-"noremap <leader>ct :ContextToggle<CR>
-
-
-" suda.vim
-cnoreabbrev sudowrite w suda://%
-cnoreabbrev sw w suda://%
-            \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
-            \ '<C-v>': 'NvimEdit vsplit',
-            \ 'gw': 'JumpNvimCwd',
-            \ 'yw': 'EmitRangerCwd'
-            \ }
-let g:rnvimr_layout = { 'relative': 'editor',
-            \ 'width': &columns,
-            \ 'height': &lines,
-            \ 'col': 0,
-            \ 'row': 0,
-            \ 'style': 'minimal' }
-let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-
-
-" AsyncRun
-noremap gp :AsyncRun git push<CR>
-
-
-" AsyncTasks
-let g:asyncrun_open = 6
