@@ -56,28 +56,18 @@ cargo install ripgrep
 | `Ctrl` `a` | Move cursor to the end of the line                                   |
 | `Ctrl` `u` | Move the character on the right of the cursor to the end of the line |
 
-#### 1.4 Remapped Text Manipulating Commands in Normal Mode
-| Shortcut        | Action                                |
-|-----------------|---------------------------------------|
-| `l`             | **undo**                              |
-| `<`             | Un-indent                             |
-| `>`             | Indent                                |
-| `SPACE` `SPACE` | Goto the next placeholder (`<++>`)    |
-
-#### 1.5 Other Useful Normal Mode Remappings
+#### 1.4 Other Useful Normal Mode Remappings
 | Shortcut        | Action                                         |
 |-----------------|------------------------------------------------|
-| `r`             | **Compile/Run the current file**               |
 | `SPACE` `s` `c` | Toggle spell suggestion a                      |
 | `SPACE` `d` `w` | Find adjacent duplicated word                  |
 | `SPACE` `t` `t` | Convert every 4 Spaces to a tab                |
 | `SPACE` `o`     | Fold                                           |
 | `SPACE` `-`     | Previous quick-fix position                    |
 | `SPACE` `+`     | Next quick-fix position                        |
-| `\` `p`         | Show the path of the current file              |
 | `SPACE` `/`     | Create a new terminal below the current window |
 
-#### 1.6 Remapped Commands in Visual Mode
+#### 1.5 Remapped Commands in Visual Mode
 | Shortcut        | Action                                 |
 |-----------------|----------------------------------------|
 | `Y`             | Copy selected text to system clipboard |
@@ -126,6 +116,7 @@ Use the arrow keys to resize the current window.
 ### 4 Terminal Keyboard Shortcuts
 | Shortcut    | Action                                                      |
 |-------------|-------------------------------------------------------------|
+| `Space` `\` | Open a terminal                                             |
 | `Ctrl` `n`  | Escape from terminal input mode                             |
 
 ## Plugins Keybindings (Screenshots/GIF provided!)
